@@ -1,0 +1,105 @@
+@import 'grid';
+
+
+@function stripunit($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+
+@mixin font-size($xs, $sm: 0, $md: 0, $lg: 0, $xl: 0){
+
+  font-size: $xs;
+
+  @if ($sm > 0){
+    @include sm {
+      
+      @if (unit($sm) == "rem" OR unit($sm) == "em"){
+        font-size: stripunit($sm) * 16px;
+      }
+
+      font-size: $sm;
+    }
+  }
+
+  @if ($md > 0){
+    @include md {
+
+      @if (unit($md) == "rem" OR unit($md) == "em"){
+        font-size: stripunit($md) * 16px;
+      }
+
+      font-size: $md;
+    }
+  }
+
+  @if ($lg > 0){
+    @include lg {
+
+      @if (unit($lg) == "rem" OR unit($lg) == "em"){
+        font-size: stripunit($lg) * 16px;
+      }
+
+      font-size: $lg;
+    }
+  }
+
+  @if ($xl > 0){
+    @include xl {
+
+      @if (unit($xl) == "rem" OR unit($xl) == "em"){
+        font-size: stripunit($xl) * 16px;
+      }
+
+      font-size: $xl;
+    }
+  }
+
+}
+
+
+@function _str-last-index($string, $substr) {
+  $index: null;
+  $length: str-length($string);
+  @for $n from $length through 1 {
+    $index: str-index(str-slice($string, $n, $length), $substr);
+    @if $index { @return $index + $n - 1; }
+  }
+  @return $index;
+}
+
+
+@function src($formats, $dir, $name){
+
+  $src-list: ();
+
+  @each $format in $formats {
+
+    $src-list: append($src-list, url($dir + $name + ".#{$format}" ) format("#{$format}"), 'comma');
+  }
+  @return $src-list;
+}
+
+
+@mixin font-src($location, $formats){
+
+  $name-start: _str-last-index($location, '/');
+  $name: str_slice($location, ($name-start + 1));
+  $dir: str_slice($location, 0, $name-start);
+  $formats: selector_parse($formats);
+
+  $title: to_upper_case(str_slice($name, 1, 1)) + str_slice($name, 2);
+  $hyphen: str-index($title, '-');
+
+  @if ($hyphen != null) {
+
+    $title: str-slice($name, 0, ($hyphen - 1));
+    $title: $title + " " + to_upper_case(str_slice(str-slice($name, ($hyphen + 1)), 1, 1)) + str_slice($name, ($hyphen + 2));
+  }
+
+  $src: src($formats, $dir, $name);
+
+  @font-face {
+    font-family: $title;
+    src: $src;
+  }
+}

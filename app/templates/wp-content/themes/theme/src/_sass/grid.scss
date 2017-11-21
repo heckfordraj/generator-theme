@@ -1,0 +1,119 @@
+$columns: 12;
+$gutter: 16px;
+$max-width: 1400px;
+
+$sm-grid: 544px;
+$md-grid: 768px;
+$lg-grid: 992px;
+$xl-grid: 1200px;
+
+@mixin sm {
+   @media all and (min-width: $sm-grid){
+    @content;
+  }
+}
+
+@mixin md {
+   @media all and (min-width: $md-grid){
+    @content;
+  }
+}
+
+@mixin lg {
+   @media all and (min-width: $lg-grid){
+    @content;
+  }
+}
+
+@mixin xl {
+   @media all and (min-width: $xl-grid){
+    @content;
+  }
+}
+
+@mixin xs-max {
+  @media all and (max-width: ($sm-grid - 1)) {
+    @content;
+  }
+}
+
+@mixin width($xs, $sm: 0, $md: 0, $lg: 0, $xl: 0, $padding: $gutter) {
+  float: left;
+  width: $xs / $columns * 100%;
+
+  // if full-width, remove padding because of padding on container
+  @if ($xs != $columns){
+    padding-left: $padding / 2;
+    padding-right: $padding / 2;
+  }
+
+  @if ($sm > 0){
+    @include sm {
+      width: $sm / $columns * 100%;
+
+      // add padding to element if not full-width on xs
+      @if ($xs == $columns){
+        padding-left: $padding / 2;
+        padding-right: $padding / 2;
+      }
+    }
+  }
+
+  @if ($md > 0){
+    @include md {
+      width: $md / $columns * 100%;
+    }
+  }
+
+  @if ($lg > 0){
+    @include lg {
+      width: $lg / $columns * 100%;
+    }
+  }
+
+  @if ($xl > 0){
+    @include xl {
+      width: $xl / $columns * 100%;
+    }
+  }
+}
+
+%padding {
+  padding-left: $gutter / 2;
+  padding-right: $gutter / 2;
+
+  @include sm {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @include md {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+  @include lg {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+}
+
+%container-min {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+%container {
+  @extend %container-min;
+  @if ($max-width > 0) {
+    max-width: $max-width;
+  }
+  @extend %padding;
+}
+
+%container-full {
+  @extend %container-min;
+  @extend %padding;
+}

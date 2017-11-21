@@ -1,0 +1,19 @@
+/*!
+Theme Name: <%= props.name %>
+Author: Heckford
+Description: <%= props.name %>, developed by Heckford
+Version: 1.0.0
+*/
+
+@import '_sass/font';
+
+@include font-src('assets/fonts/helvetica', 'ttf, otf, woff, woff2, svg');
+
+
+@import '_sass/grid', '_sass/reset';
+
+body {
+  font-family: 'Helvetica', sans-serif;
+  font-weight: normal;
+  @include font-size(1rem, 1rem, 1rem, 1rem, 1rem);
+}

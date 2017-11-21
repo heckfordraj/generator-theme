@@ -1,0 +1,23 @@
+{
+  "name": "<%= props.dir %>",
+  "version": "1.0.0",
+  "scripts": {
+    "serve": "gulp serve",
+    "build": "gulp build"
+  },
+  "devDependencies": {
+    "browser-sync": "latest",
+    "del": "^3.0.0",
+    "gulp": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-changed": "latest",
+    "gulp-clean-css": "latest",
+    "gulp-color": "latest",
+    "gulp-environments": "latest",
+    "gulp-imagemin": "latest",
+    "gulp-sass": "latest",
+    "gulp-sourcemaps": "latest",
+    "gulp-uglify": "latest",
+    "pump": "latest"
+  }
+}
