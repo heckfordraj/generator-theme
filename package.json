@@ -12,6 +12,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://bitbucket.org:heckford/generator-theme.git"
-  },
+    "url": "git+https://github.com/heckfordraj/generator-theme.git"
+  }
 }
