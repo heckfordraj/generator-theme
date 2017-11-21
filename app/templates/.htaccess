@@ -1,0 +1,19 @@
+# Prevent WordPress user enumeration: http://wordpress.stackexchange.com/a/130171
+RewriteCond %{REQUEST_URI} !^/wp-admin [NC]
+RewriteCond %{QUERY_STRING} author=\d
+RewriteRule ^ /? [L,R=301]
+
+# Block access to WordPress files that reveal version information.
+<FilesMatch "^(wp-config\.php|readme\.html|license\.txt)">
+ Order allow,deny
+ Deny from all
+ Satisfy All
+</FilesMatch>
+
+# Protect wp-includes
+RewriteRule ^wp-admin/includes/ - [F]
+RewriteRule !^wp-includes/ - [S=3]
+RewriteCond %{SCRIPT_FILENAME} !^(.*)wp-includes/ms-files.php
+RewriteRule ^wp-includes/[^/]+\.php$ - [F]
+RewriteRule ^wp-includes/js/tinymce/langs/.+\.php - [F]
+RewriteRule ^wp-includes/theme-compat/ - [F]

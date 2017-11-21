@@ -1,0 +1,11 @@
+{
+  "name": "generator-theme",
+  "version": "1.0.0",
+  "description": "Generates blank WP theme",
+  "files": [
+    "app"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^1.0.0"
+  }
+}
