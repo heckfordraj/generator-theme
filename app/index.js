@@ -97,7 +97,7 @@ module.exports = class extends Generator {
 
       // root .htaccess
       this._appendFile(
-        this.templatePath('.htaccess'),
+        this.templatePath('htaccess'),
         this.destinationPath('../../../.htaccess')
       )
 
