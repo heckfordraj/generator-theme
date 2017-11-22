@@ -14,7 +14,7 @@ module.exports = class extends Generator {
     this.props.dir = path.basename(this.destinationRoot());
     this.props.name = s(this.props.dir).humanize().titleize().value();
 
-    this.props.nameToDomain = () => {
+    this.props.nameToSlug = () => {
       return s(this.props.name).slugify().value();
     }
   }
@@ -36,7 +36,7 @@ module.exports = class extends Generator {
           type: 'input',
           name: 'domain',
           message: 'Site domain',
-          default: this.props.nameToDomain() + '.local'
+          default: this.props.nameToSlug() + '.local'
         };
       },
       sass: () => {

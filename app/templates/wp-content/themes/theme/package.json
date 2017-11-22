@@ -1,5 +1,5 @@
 {
-  "name": "<%= props.dir %>",
+  "name": "<%= props.nameToSlug() %>",
   "version": "1.0.0",
   "scripts": {
     "serve": "gulp serve",
