@@ -8,58 +8,70 @@ module.exports = class extends Generator {
 
   initializing() {
 
-    this.log(yosay('This will install a blank WP theme'));
+    this.log(yosay('This will install a basic WP theme'));
 
     this.props = {};
     this.props.dir = path.basename(this.destinationRoot());
     this.props.name = s(this.props.dir).humanize().titleize().value();
+
+    this.props.nameToDomain = () => {
+      return s(this.props.name).slugify().value();
+    }
   }
 
 
   prompting() {
 
     const prompts = {
-      name: {
-        type: 'input',
-        name: 'name',
-        message: 'Theme name',
-        default: this.props.name
+      name: () => {
+        return {
+          type: 'input',
+          name: 'name',
+          message: 'Theme name',
+          default: this.props.name
+        };
       },
-      domain: {
-        type: 'input',
-        name: 'domain',
-        message: 'Site domain',
-        default: this.props.dir + '.local'
+      domain: () => {
+        return {
+          type: 'input',
+          name: 'domain',
+          message: 'Site domain',
+          default: this.props.nameToDomain() + '.local'
+        };
       },
-      sass: {
-        type: 'confirm',
-        name: 'sass',
-        message: 'Include sass templates?',
-        default: 'true'
+      sass: () => {
+        return {
+          type: 'confirm',
+          name: 'sass',
+          message: 'Include sass templates?',
+          default: 'true'
+        };
       },
-      security: {
-        type: 'confirm',
-        name: 'security',
-        message: 'Include security additions?',
-        default: 'true'
+      security: () => {
+        return {
+          type: 'confirm',
+          name: 'security',
+          message: 'Include security additions?',
+          default: 'true'
+        };
       }
     };
 
-    return this.prompt(prompts.name)
+    return this.prompt(prompts.name())
     .then((answer) => {
 
       this.props.name = answer.name;
-      return this.prompt(prompts.domain)
+      return this.prompt(prompts.domain())
     })
     .then((answer) => {
 
       this.props.domain = answer.domain;
-      return this.prompt(prompts.sass)
+      return this.prompt(prompts.sass())
     })
     .then((answer) => {
 
       this.props.sass = answer.sass;
-      return this.prompt(prompts.security)
+      return this.prompt(prompts.security())
     })
     .then((answer) => {
 
