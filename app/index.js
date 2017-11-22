@@ -2,12 +2,13 @@ const Generator = require('yeoman-generator');
 const path = require('path');
 const s = require('underscore.string');
 const yosay = require('yosay');
+const chalk = require('chalk');
 
 module.exports = class extends Generator {
 
   initializing() {
 
-    this.log(yosay('This will install a blank theme inside a WP theme folder'));
+    this.log(yosay('This will install a blank WP theme'));
 
     this.props = {};
     this.props.dir = path.basename(this.destinationRoot());
@@ -67,33 +68,43 @@ module.exports = class extends Generator {
 
   }
 
-  _copyAppend(file, target) {
+
+  _tryCopy(file, target) {
 
     try {
 
-      if (this.fs.exists(target)) {
+      // read function does nothing but throw error for copy function
+      this.fs.read(target);
+      this.fs.copy(file, target);
 
-        let fileData = this.fs.read(
-          this.templatePath(file)
-        );
+    } catch (e) {
 
-        this.fs.append(
-          this.destinationPath(target),
-          fileData
-        );
-
-      } else {
-
-        this.fs.copy(
-          this.templatePath(file),
-          this.destinationPath(target)
-        );
-      }
-
-    } catch(e) {
-
-      this.log('Cannot access root folder. Are you running this from a theme folder?');
+      this.log(chalk.bgRedBright(`Failed to install ${path.basename(file)}. Are you running this from within a theme folder?`));
     }
+
+  }
+
+  _copyAppend(file, target) {
+
+    if (this.fs.exists(this.destinationPath(target))) {
+
+      let fileData = this.fs.read(
+        this.templatePath(file)
+      );
+
+      this.fs.append(
+        this.destinationPath(target),
+        fileData
+      );
+
+    } else {
+
+      this._tryCopy(
+        this.templatePath(file),
+        this.destinationPath(target)
+      );
+    }
+
   }
 
 
@@ -114,13 +125,13 @@ module.exports = class extends Generator {
       )
 
       // robots.txt
-      this.fs.copy(
+      this._tryCopy(
         this.templatePath('robots.txt'),
         this.destinationPath('../../../robots.txt')
       );
 
       // wp-content .htaccess
-      this.fs.copy(
+      this._tryCopy(
         this.templatePath('wp-content/htaccess'),
         this.destinationPath('../../.htaccess')
       );

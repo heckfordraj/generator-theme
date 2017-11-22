@@ -6,6 +6,7 @@
     "app"
   ],
   "dependencies": {
+    "chalk": "^2.3.0",
     "underscore.string": "^3.3.4",
     "yeoman-generator": "^1.0.0",
     "yo": "^2.0.0",
