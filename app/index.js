@@ -67,26 +67,32 @@ module.exports = class extends Generator {
 
   }
 
+  _copyAppend(file, target) {
 
-  _appendFile(file, target) {
+    try {
 
-    if (this.fs.exists(target)) {
+      if (this.fs.exists(target)) {
 
-      let fileData = this.fs.read(
-        this.templatePath(file)
-      );
+        let fileData = this.fs.read(
+          this.templatePath(file)
+        );
 
-      this.fs.append(
-        this.destinationPath(target),
-        fileData
-      );
+        this.fs.append(
+          this.destinationPath(target),
+          fileData
+        );
 
-    } else {
+      } else {
 
-      this.fs.copy(
-        this.templatePath(file),
-        this.destinationPath(target)
-      );
+        this.fs.copy(
+          this.templatePath(file),
+          this.destinationPath(target)
+        );
+      }
+
+    } catch(e) {
+
+      this.log('Cannot access root folder. Are you running this from a theme folder?');
     }
   }
 
@@ -96,13 +102,13 @@ module.exports = class extends Generator {
     if (this.props.security === true) {
 
       // root .htaccess
-      this._appendFile(
+      this._copyAppend(
         this.templatePath('htaccess'),
         this.destinationPath('../../../.htaccess')
       )
 
       // wp-config.php
-      this._appendFile(
+      this._copyAppend(
         this.templatePath('wp-config.php'),
         this.destinationPath('../../../wp-config.php')
       )
@@ -163,11 +169,6 @@ module.exports = class extends Generator {
   install() {
 
     this.installDependencies({ bower: false });
-  }
-
-  end() {
-
-
   }
 
 };
