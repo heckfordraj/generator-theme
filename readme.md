@@ -37,22 +37,29 @@ yo theme
 
 ## Questions
 
-##### `Theme name`
+#### `Theme name`
 
 The titlecase name of the theme as usually entered in the `theme/style.css`.
-*Default:* Humanized format of the theme directory name e.g. `Theme Name`
 
-##### `Site domain`
+*Default:* humanized format of the theme directory name e.g. `Theme Name`
+
+
+#### `Site domain`
 
 The domain of the site hosted locally. This will be used as the proxy path.
-*Default:* Slugified format of the theme directory name e.g. `theme-name`
 
-##### `Include sass templates?`
+*Default:* slugified format of the theme directory name e.g. `theme-name`
+
+
+#### `Include sass templates?`
 
 Whether to install the sass boilerplate.
+
 *Default:* `y`
 
-##### `Include security additions?`
+
+#### `Include security additions?`
 
 Whether to install the `.htaccess`, `wp-config.php`, and `robots.txt` additions. Will update the root `.htaccess`, update `wp-config.php`, add a root `robots.txt`, and add a `wp-content/.htaccess`.
+
 *Default:* `y`
