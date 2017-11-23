@@ -1,9 +1,10 @@
 const Generator = require('yeoman-generator');
 const fs = require('fs');
 const path = require('path');
-const s = require('underscore.string');
+const helpers = require('./helpers.js');
 const yosay = require('yosay');
 const chalk = require('chalk');
+
 
 module.exports = class extends Generator {
 
@@ -12,12 +13,9 @@ module.exports = class extends Generator {
     this.log(yosay('This will install a basic WP theme'));
 
     this.props = {};
-    this.props.dir = path.basename(this.destinationRoot());
-    this.props.name = s(this.props.dir).humanize().titleize().value();
-
-    this.props.nameToSlug = () => {
-      return s(this.props.name).slugify().value();
-    }
+    this.props.dir = helpers.dir();
+    this.props.name = helpers.name();
+    this.props.nameToSlug = () => helpers.nameToSlug(this.props.name);
   }
 
 

@@ -63,3 +63,10 @@ Whether to install the sass boilerplate.
 Whether to install the `.htaccess`, `wp-config.php`, and `robots.txt` additions. Will update the root `.htaccess`, update `wp-config.php`, add a root `robots.txt`, and add a `wp-content/.htaccess`.
 
 *Default:* `y`
+
+
+## Tests
+
+```bash
+npm test
+```
