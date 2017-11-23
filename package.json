@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "chalk": "^2.3.0",
+    "fs": "0.0.1-security",
     "underscore.string": "^3.3.4",
     "yeoman-generator": "^1.0.0",
     "yo": "^2.0.0",
@@ -21,7 +22,9 @@
   },
   "devDependencies": {
     "mocha": "^4.0.1",
+    "os": "^0.1.1",
     "path": "^0.12.7",
+    "randomstring": "^1.1.5",
     "yeoman-assert": "^3.1.0",
     "yeoman-test": "^1.7.0"
   }

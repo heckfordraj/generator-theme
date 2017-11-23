@@ -1,4 +1,5 @@
 const Generator = require('yeoman-generator');
+const fs = require('fs');
 const path = require('path');
 const s = require('underscore.string');
 const yosay = require('yosay');
@@ -85,8 +86,8 @@ module.exports = class extends Generator {
 
     try {
 
-      // read function does nothing but throw error for copy function
-      this.fs.read(target);
+      // check if user has permissions to write to target directory
+      fs.accessSync(path.dirname(target), fs.constants.W_OK);
       this.fs.copy(file, target);
 
     } catch (e) {
@@ -124,7 +125,7 @@ module.exports = class extends Generator {
 
     if (this.props.security === true) {
 
-      // root .htaccess
+      // .htaccess
       this._copyAppend(
         this.templatePath('htaccess'),
         this.destinationPath('../../../.htaccess')
@@ -142,7 +143,7 @@ module.exports = class extends Generator {
         this.destinationPath('../../../robots.txt')
       );
 
-      // wp-content .htaccess
+      // wp-content/.htaccess
       this._tryCopy(
         this.templatePath('wp-content/htaccess'),
         this.destinationPath('../../.htaccess')
@@ -169,7 +170,7 @@ module.exports = class extends Generator {
       { props: this.props }
     );
 
-    // theme/src .php
+    // theme/src/**/*.php
     this.fs.copyTpl(
       this.templatePath('wp-content/themes/theme/src/**/*.php'),
       this.destinationPath('src'),
@@ -178,7 +179,7 @@ module.exports = class extends Generator {
 
     if (this.props.sass === true) {
 
-      // theme/src .scss
+      // theme/src/**/*.scss
       this.fs.copyTpl(
         this.templatePath('wp-content/themes/theme/src/**/*.scss'),
         this.destinationPath('src'),
