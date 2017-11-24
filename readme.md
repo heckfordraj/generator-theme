@@ -2,6 +2,8 @@
 [![Build Status](https://travis-ci.org/heckfordraj/generator-theme.svg?branch=master)](https://travis-ci.org/heckfordraj/generator-theme) [![Coverage Status](https://coveralls.io/repos/github/heckfordraj/generator-theme/badge.svg?branch=master)](https://coveralls.io/github/heckfordraj/generator-theme?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/heckfordraj/generator-theme.svg)](https://greenkeeper.io/)
 
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/heckfordraj/generator-theme.svg)](https://greenkeeper.io/)
+
 A [Yeoman](https://www.npmjs.com/package/yo) generator that scaffolds a basic WP theme.
 
 
