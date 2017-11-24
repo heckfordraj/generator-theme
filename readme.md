@@ -68,6 +68,14 @@ Whether to install the `.htaccess`, `wp-config.php`, and `robots.txt` additions.
 
 ## Tests
 
+Mocha:
+
 ```bash
 npm test
+```
+
+Mocha and Istanbul:
+
+```bash
+npm run coverage
 ```
