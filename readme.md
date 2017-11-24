@@ -1,5 +1,7 @@
 # generator-theme
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/heckfordraj/generator-theme.svg)](https://greenkeeper.io/)
+
 A [Yeoman](https://www.npmjs.com/package/yo) generator that scaffolds a basic WP theme.
 
 
