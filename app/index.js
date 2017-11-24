@@ -92,30 +92,19 @@ module.exports = class extends Generator {
 
       this.log(chalk.bgRedBright(`Failed to install ${path.basename(file)}. Are you running this from within a theme folder?`));
     }
-
   }
 
   _copyAppend(file, target) {
 
-    if (this.fs.exists(this.destinationPath(target))) {
+    if (this.fs.exists(target)) {
 
-      let fileData = this.fs.read(
-        this.templatePath(file)
-      );
-
-      this.fs.append(
-        this.destinationPath(target),
-        fileData
-      );
-
+      let fileData = this.fs.read(file);
+      this.fs.append(target, fileData);
+      
     } else {
 
-      this._tryCopy(
-        this.templatePath(file),
-        this.destinationPath(target)
-      );
+      this._tryCopy(file, target);
     }
-
   }
 
 
