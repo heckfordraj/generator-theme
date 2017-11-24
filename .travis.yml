@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - "8"
+env:
+  global:
+  - TMPDIR=$HOME/build
 cache:
   directories:
     - "node_modules"
