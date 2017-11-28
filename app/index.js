@@ -100,7 +100,7 @@ module.exports = class extends Generator {
 
       let fileData = this.fs.read(file);
       this.fs.append(target, fileData);
-      
+
     } else {
 
       this._tryCopy(file, target);
@@ -155,6 +155,12 @@ module.exports = class extends Generator {
       this.templatePath('wp-content/themes/theme/package.json'),
       this.destinationPath('package.json'),
       { props: this.props }
+    );
+
+    // readme.md
+    this.fs.copyTpl(
+      this.templatePath('wp-content/themes/theme/readme.md'),
+      this.destinationPath('readme.md')
     );
 
     // theme/src/**/*.php

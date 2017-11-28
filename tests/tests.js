@@ -13,6 +13,7 @@ var files = {
     '.gitignore',
     'gulpfile.js',
     'package.json',
+    'readme.md',
     'src/footer.php',
     'src/functions.php',
     'src/header.php',

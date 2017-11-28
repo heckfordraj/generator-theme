@@ -61,7 +61,7 @@ if (development()) {
   gulp.task('images', function(cb) {
     pump([
 
-      gulp.src('./src/assets/**/*.{jpg,png,gif}'),
+      gulp.src('./src/assets/**/*.{jpg,png,gif,svg}'),
       changed('./src/assets'),
       imagemin({ verbose: true }),
       gulp.dest('./src/assets')
