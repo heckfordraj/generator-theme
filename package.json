@@ -10,7 +10,7 @@
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "chalk": "^2.3.0",
+    "chalk": "^2.4.1",
     "fs": "0.0.2",
     "underscore.string": "^3.3.4",
     "yeoman-generator": "^2.0.1",
