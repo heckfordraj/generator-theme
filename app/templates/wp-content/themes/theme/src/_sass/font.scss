@@ -1,4 +1,4 @@
-@import 'grid';
+@import './grid';
 
 @function stripunit($number) {
   @return $number / ($number * 0 + 1);
@@ -48,16 +48,19 @@
   }
 }
 
-@function _str-last-index($string, $substr) {
-  $index: null;
-  $length: str-length($string);
-  @for $n from $length through 1 {
-    $index: str-index(str-slice($string, $n, $length), $substr);
-    @if $index {
-      @return $index + $n - 1;
+@function _str-last-index($string, $needle) {
+  $index: str-index($string, $needle);
+  $result: $index;
+
+  @if $index {
+    @for $i from $index + str-length($needle) through str-length($string) {
+      @if str-slice($string, $i, $i + str-length($needle) - 1) == $needle {
+        $result: $i;
+      }
     }
   }
-  @return $index;
+
+  @return $result;
 }
 
 @function src($formats, $dir, $name) {
@@ -76,24 +79,8 @@
 @mixin font-src($location, $formats) {
   $name-start: _str-last-index($location, '/');
   $name: str_slice($location, ($name-start + 1));
-  $dir: str_slice($location, 0, $name-start);
+  $dir: str_slice($location, 1, $name-start);
   $formats: selector_parse($formats);
 
-  $title: to_upper_case(str_slice($name, 1, 1)) + str_slice($name, 2);
-  $hyphen: str-index($title, '-');
-
-  @if ($hyphen != null) {
-    $title: str-slice($name, 0, ($hyphen - 1));
-    $title: $title +
-      ' ' +
-      to_upper_case(str_slice(str-slice($name, ($hyphen + 1)), 1, 1)) +
-      str_slice($name, ($hyphen + 2));
-  }
-
-  $src: src($formats, $dir, $name);
-
-  @font-face {
-    font-family: $title;
-    src: $src;
-  }
+  src: src($formats, $dir, $name);
 }

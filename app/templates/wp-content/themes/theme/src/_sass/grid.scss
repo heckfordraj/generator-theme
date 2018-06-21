@@ -38,24 +38,13 @@ $xl-grid: 1200px;
 }
 
 @mixin width($xs, $sm: 0, $md: 0, $lg: 0, $xl: 0, $padding: $gutter) {
-  float: left;
   width: $xs / $columns * 100%;
-
-  // if full-width, remove padding because of padding on container
-  @if ($xs != $columns) {
-    padding-left: $padding / 2;
-    padding-right: $padding / 2;
-  }
+  padding-left: $padding / 2;
+  padding-right: $padding / 2;
 
   @if ($sm > 0) {
     @include sm {
       width: $sm / $columns * 100%;
-
-      // add padding to element if not full-width on xs
-      @if ($xs == $columns) {
-        padding-left: $padding / 2;
-        padding-right: $padding / 2;
-      }
     }
   }
 
@@ -99,7 +88,6 @@ $xl-grid: 1200px;
 }
 
 %container-min {
-  position: relative;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
@@ -116,4 +104,9 @@ $xl-grid: 1200px;
 %container-full {
   @extend %container-min;
   @extend %padding;
+}
+
+%container-col {
+  margin-left: -$gutter / 2;
+  margin-right: -$gutter / 2;
 }

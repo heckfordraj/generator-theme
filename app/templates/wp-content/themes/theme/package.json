@@ -1,23 +1,38 @@
 {
   "name": "<%= props.nameToSlug() %>",
   "version": "1.0.0",
+  "description": "",
   "scripts": {
-    "serve": "gulp serve",
-    "build": "gulp build"
+    "build": "NODE_ENV=production yarn run webpack",
+    "serve": "yarn run webpack --watch",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,scss,json}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
   },
   "devDependencies": {
-    "browser-sync": "latest",
-    "del": "latest",
-    "gulp": "latest",
-    "gulp-autoprefixer": "latest",
-    "gulp-changed": "latest",
-    "gulp-clean-css": "latest",
-    "gulp-color": "latest",
-    "gulp-environments": "latest",
-    "gulp-imagemin": "latest",
-    "gulp-sass": "latest",
-    "gulp-sourcemaps": "latest",
-    "gulp-uglify": "latest",
-    "pump": "latest"
-  }
+    "@babel/core": "latest",
+    "@babel/preset-env": "latest",
+    "autoprefixer": "latest",
+    "babel-loader": "latest",
+    "copy-webpack-plugin": "latest",
+    "css-loader": "latest",
+    "cssnano": "latest",
+    "file-loader": "latest",
+    "husky": "latest",
+    "imagemin-webpack-plugin": "latest",
+    "lint-staged": "latest",
+    "mini-css-extract-plugin": "latest",
+    "node-sass": "latest",
+    "postcss-loader": "latest",
+    "prettier": "latest",
+    "sass-loader": "latest",
+    "uglifyjs-webpack-plugin": "latest",
+    "webpack": "latest",
+    "webpack-cli": "latest"
+  },
+  "license": "ISC"
 }

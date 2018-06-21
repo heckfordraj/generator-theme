@@ -1,5 +1,0 @@
-RewriteEngine on
-#if the file does not have one of theses extensions
-RewriteCond %{REQUEST_URI} !\.(css|jpe?g|png|gif|js|swf|html|htm|eot|woff|woff2|otf|ttf|svg|doc|docx|xls|xlsx|ppt|pptx|pdf|map|dat|webp)$
-#then it should be marked as forbidden.
-RewriteRule .*$ - [F]

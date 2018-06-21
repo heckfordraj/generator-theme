@@ -1,26 +1,12 @@
 <?php
 
-function remove_menus(){
+function remove_menus() {
+  if ( current_user_can( 'administrator' ) ) return;
 
-  // remove_menu_page( 'edit.php' );                   //Posts
-  // remove_menu_page( 'upload.php' );                 //Media
-  // remove_menu_page( 'edit.php?post_type=page' );    //Pages
-  remove_menu_page( 'edit-comments.php' );          //Comments
-  // remove_menu_page( 'themes.php' );                 //Appearance
-  // remove_menu_page( 'plugins.php' );                //Plugins
-  // remove_menu_page( 'users.php' );                  //Users
-  // remove_menu_page( 'tools.php' );                  //Tools
-  // remove_menu_page( 'options-general.php' );        //Settings
+  remove_menu_page( 'edit.php' );
+  remove_menu_page( 'edit-comments.php' );
 }
 add_action( 'admin_menu', 'remove_menus' );
-
-
-function remove_default_post_taxononomies() {
-
-  unregister_taxonomy_for_object_type('category', 'post');
-  unregister_taxonomy_for_object_type('post_tag', 'post');
-}
-add_action('init', 'remove_default_post_taxononomies');
 
 
 function disable_emojis() {
@@ -36,26 +22,64 @@ function disable_emojis() {
 add_action( 'init', 'disable_emojis' );
 
 
-function disable_rest_endpoints( $access ) {
+function disable_user_rest_endpoints( $endpoints ) {
 
-	if( ! is_user_logged_in() ) {
-		return new WP_Error( 'rest_cannot_access', __( 'Only authenticated users can access the REST API.', 'disable-json-api' ), array( 'status' => rest_authorization_required_code() ) );
-	}
-  return $access;
+  if ( isset( $endpoints['/wp/v2/users'] ) )
+    unset( $endpoints['/wp/v2/users'] );
+
+  if ( isset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] ) )
+    unset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] );
+
+  return $endpoints;
 }
-add_filter( 'rest_authentication_errors', 'disable_rest_endpoints' );
+add_filter( 'rest_endpoints', 'disable_user_rest_endpoints' );
 
 
-function async_scripts($tag, $handle) {
+function async_scripts( $tag ) {
 
-    if ( is_admin() ) {
-        return $tag;
-    }
-    else {
-      return str_replace( 'src', 'async src', $tag );
-    }
+  if ( is_admin() ) return $tag;
+
+  if ( strpos( $tag, '#defer' ) ) {
+
+    $tag = str_replace( '#defer', '', $tag );
+    return str_replace( 'src=', 'defer src=', $tag );
+  }
+
+  return str_replace( 'src=', 'async src=', $tag );
 }
-add_filter('script_loader_tag', 'async_scripts', 10, 2);
+add_filter( 'script_loader_tag', 'async_scripts', 10, 2 );
 
 
-remove_action('wp_head', 'wp_generator');
+function custom_excerpt_more( $more ) {
+
+  return '…';
+}
+add_filter( 'excerpt_more', 'custom_excerpt_more' );
+
+
+function custom_image_sizes() {
+
+	update_option( 'medium_size_w', 1200 );
+	update_option( 'large_size_w', 1800 );
+}
+add_action( 'after_setup_theme', 'custom_image_sizes' );
+
+
+function attachment_image_lazy( $attributes ) {
+
+  if (
+    empty( $attributes['src'] ) ||
+    empty( $attributes['srcset'] )
+  ) return $attributes;
+
+  $attributes['src'] = '';
+
+  $attributes['data-srcset'] = $attributes['srcset'];
+  unset( $attributes['srcset'] );
+
+  return $attributes;
+}
+add_filter( 'wp_get_attachment_image_attributes', 'attachment_image_lazy' );
+
+
+remove_action( 'wp_head', 'wp_generator' );

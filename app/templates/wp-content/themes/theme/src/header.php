@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
-	<meta charset="<?php bloginfo('charset'); ?>">
+	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -10,13 +10,14 @@
 
 <body <?php body_class(); ?>>
 
-	<header>
-		<nav>
-			<?php
-                wp_nav_menu(array(
-                    'theme_location' => 'nav',
-                    'menu_id'        => 'primary-menu',
-                ));
-            ?>
-		</nav>
-	</header>
+  <header>
+  	<nav>
+  		<?php
+        wp_nav_menu(
+					array(
+            'theme_location' => 'nav'
+        	)
+				);
+      ?>
+  	</nav>
+  </header>
