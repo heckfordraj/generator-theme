@@ -5,11 +5,8 @@ const helpers = require('./helpers.js');
 const yosay = require('yosay');
 const chalk = require('chalk');
 
-
 module.exports = class extends Generator {
-
   initializing() {
-
     this.log(yosay('This will install a basic WP theme'));
 
     this.props = {};
@@ -18,9 +15,7 @@ module.exports = class extends Generator {
     this.props.nameToSlug = () => helpers.nameToSlug(this.props.name);
   }
 
-
   prompting() {
-
     const prompts = {
       name: () => {
         return {
@@ -57,72 +52,61 @@ module.exports = class extends Generator {
     };
 
     return this.prompt(prompts.name())
-    .then((answer) => {
-
-      this.props.name = answer.name;
-      return this.prompt(prompts.domain())
-    })
-    .then((answer) => {
-
-      this.props.domain = answer.domain;
-      return this.prompt(prompts.sass())
-    })
-    .then((answer) => {
-
-      this.props.sass = answer.sass;
-      return this.prompt(prompts.security())
-    })
-    .then((answer) => {
-
-      this.props.security = answer.security;
-    });
-
+      .then(answer => {
+        this.props.name = answer.name;
+        return this.prompt(prompts.domain());
+      })
+      .then(answer => {
+        this.props.domain = answer.domain;
+        return this.prompt(prompts.sass());
+      })
+      .then(answer => {
+        this.props.sass = answer.sass;
+        return this.prompt(prompts.security());
+      })
+      .then(answer => {
+        this.props.security = answer.security;
+      });
   }
 
-
   _tryCopy(file, target) {
-
     try {
-
       // check if user has permissions to write to target directory
       fs.accessSync(path.dirname(target), fs.constants.W_OK);
       this.fs.copy(file, target);
-
     } catch (e) {
-
-      this.log(chalk.bgRedBright(`Failed to install ${path.basename(file)}. Are you running this from within a theme folder?`));
+      this.log(
+        chalk.bgRedBright(
+          `Failed to install ${path.basename(
+            file
+          )}. Are you running this from within a theme folder?`
+        )
+      );
     }
   }
 
   _copyAppend(file, target) {
-
     if (this.fs.exists(target)) {
-
       let fileData = this.fs.read(file);
       this.fs.append(target, fileData);
-
     } else {
-
       this._tryCopy(file, target);
     }
   }
 
-
   writing() {
-
     if (this.props.security === true) {
-
       // .htaccess
       this._copyAppend(
         this.templatePath('htaccess'),
         this.destinationPath('../../../.htaccess')
-      )
+      );
 
       // wp-config.php
       this._copyAppend(
         this.templatePath('wp-config.php'),
         this.destinationPath('../../../wp-config.php')
-      )
+      );
 
       // robots.txt
       this._tryCopy(
@@ -171,7 +155,6 @@ module.exports = class extends Generator {
     );
 
     if (this.props.sass === true) {
-
       // theme/src/**/*.scss
       this.fs.copyTpl(
         this.templatePath('wp-content/themes/theme/src/**/*.scss'),
@@ -179,13 +162,9 @@ module.exports = class extends Generator {
         { props: this.props }
       );
     }
-
   }
-
 
   install() {
-
     this.installDependencies({ bower: false });
   }
-
 };

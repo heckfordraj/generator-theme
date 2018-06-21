@@ -8,7 +8,6 @@ Files with the extensions `php|html|jpg|png|gif|svg|ico` in any directory will b
 
 Use `src/assets` to keep static files and any other files you want to include in the theme. The contents of this folder will be copied entirely to `dist/assets`.
 
-
 ## Usage
 
 First install the development dependencies:
@@ -32,9 +31,11 @@ npm run build
 You can target a build environment by using the flags `--dev` (default) or `--prod`.
 
 ### Development (default)
+
 SASS to CSS (includes sourcemaps)
 
 ### Production
+
 SASS to CSS (with Autoprefixer, CleanCSS)
 JS (with UglifyJS)
 Images (jpg, png, gif, svg with Imagemin)

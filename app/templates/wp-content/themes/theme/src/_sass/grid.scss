@@ -8,25 +8,25 @@ $lg-grid: 992px;
 $xl-grid: 1200px;
 
 @mixin sm {
-   @media all and (min-width: $sm-grid){
+  @media all and (min-width: $sm-grid) {
     @content;
   }
 }
 
 @mixin md {
-   @media all and (min-width: $md-grid){
+  @media all and (min-width: $md-grid) {
     @content;
   }
 }
 
 @mixin lg {
-   @media all and (min-width: $lg-grid){
+  @media all and (min-width: $lg-grid) {
     @content;
   }
 }
 
 @mixin xl {
-   @media all and (min-width: $xl-grid){
+  @media all and (min-width: $xl-grid) {
     @content;
   }
 }
@@ -42,36 +42,36 @@ $xl-grid: 1200px;
   width: $xs / $columns * 100%;
 
   // if full-width, remove padding because of padding on container
-  @if ($xs != $columns){
+  @if ($xs != $columns) {
     padding-left: $padding / 2;
     padding-right: $padding / 2;
   }
 
-  @if ($sm > 0){
+  @if ($sm > 0) {
     @include sm {
       width: $sm / $columns * 100%;
 
       // add padding to element if not full-width on xs
-      @if ($xs == $columns){
+      @if ($xs == $columns) {
         padding-left: $padding / 2;
         padding-right: $padding / 2;
       }
     }
   }
 
-  @if ($md > 0){
+  @if ($md > 0) {
     @include md {
       width: $md / $columns * 100%;
     }
   }
 
-  @if ($lg > 0){
+  @if ($lg > 0) {
     @include lg {
       width: $lg / $columns * 100%;
     }
   }
 
-  @if ($xl > 0){
+  @if ($xl > 0) {
     @include xl {
       width: $xl / $columns * 100%;
     }
