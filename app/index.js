@@ -9,10 +9,11 @@ module.exports = class extends Generator {
   initializing() {
     this.log(yosay('This will install a basic WP theme'));
 
-    this.props = {};
-    this.props.dir = helpers.dir();
-    this.props.name = helpers.name();
-    this.props.nameToSlug = () => helpers.nameToSlug(this.props.name);
+    this.props = {
+      dir: helpers.dir(),
+      name: helpers.name(),
+      nameToSlug: () => helpers.nameToSlug(this.props.name)
+    };
   }
 
   prompting() {
@@ -30,7 +31,7 @@ module.exports = class extends Generator {
           type: 'input',
           name: 'domain',
           message: 'Site domain',
-          default: this.props.nameToSlug() + '.local'
+          default: `${this.props.nameToSlug()}.local`
         };
       },
       sass: () => {
@@ -52,20 +53,20 @@ module.exports = class extends Generator {
     };
 
     return this.prompt(prompts.name())
-      .then(answer => {
-        this.props.name = answer.name;
+      .then(({ name }) => {
+        this.props.name = name;
         return this.prompt(prompts.domain());
       })
-      .then(answer => {
-        this.props.domain = answer.domain;
+      .then(({ domain }) => {
+        this.props.domain = domain;
         return this.prompt(prompts.sass());
       })
-      .then(answer => {
-        this.props.sass = answer.sass;
+      .then(({ sass }) => {
+        this.props.sass = sass;
         return this.prompt(prompts.security());
       })
-      .then(answer => {
-        this.props.security = answer.security;
+      .then(({ security }) => {
+        this.props.security = security;
       });
   }
 
@@ -87,7 +88,7 @@ module.exports = class extends Generator {
 
   _copyAppend(file, target) {
     if (this.fs.exists(target)) {
-      let fileData = this.fs.read(file);
+      const fileData = this.fs.read(file);
       this.fs.append(target, fileData);
     } else {
       this._tryCopy(file, target);

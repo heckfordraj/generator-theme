@@ -1,14 +1,14 @@
-var os = require('os');
-var fs = require('fs');
-var path = require('path');
-var test = require('yeoman-test');
-var assert = require('yeoman-assert');
-var sinon = require('sinon');
-var randomstring = require('randomstring');
+const os = require('os');
+const fs = require('fs');
+const path = require('path');
+const test = require('yeoman-test');
+const assert = require('yeoman-assert');
+const sinon = require('sinon');
+const randomstring = require('randomstring');
 
-var helpers = require('../app/helpers.js');
+const helpers = require('../app/helpers.js');
 
-var files = {
+const files = {
   default: [
     '.gitignore',
     'gulpfile.js',
@@ -36,17 +36,17 @@ var files = {
   ]
 };
 
-describe('generator-theme', function() {
-  describe('should get', function() {
-    var gen;
+describe('generator-theme', () => {
+  describe('should get', () => {
+    let gen;
 
-    beforeEach(function() {
+    beforeEach(() => {
       return test
         .run(path.join(__dirname, '../app'))
         .inDir(
           path.join(
             os.tmpdir(),
-            randomstring.generate(7) + '/wp-content/themes/theme-name'
+            `${randomstring.generate(7)}/wp-content/themes/theme-name`
           )
         )
         .withPrompts({
@@ -55,38 +55,38 @@ describe('generator-theme', function() {
           sass: false,
           security: false
         })
-        .on('ready', function(generator) {
+        .on('ready', generator => {
           gen = generator;
         });
     });
 
-    it('current directory', function() {
+    it('current directory', () => {
       assert.textEqual(helpers.dir(), 'theme-name');
     });
 
-    describe('answers', function() {
-      it('name', function() {
+    describe('answers', () => {
+      it('name', () => {
         assert.textEqual(gen.props.name, 'Company Name');
       });
 
-      it('domain', function() {
+      it('domain', () => {
         assert.textEqual(gen.props.domain, 'company.dev');
       });
 
-      it('sass', function() {
+      it('sass', () => {
         assert.equal(gen.props.sass, false);
       });
 
-      it('security', function() {
+      it('security', () => {
         assert.equal(gen.props.security, false);
       });
     });
   });
 
-  describe('should transform', function() {
-    var gen;
+  describe('should transform', () => {
+    let gen;
 
-    beforeEach(function() {
+    beforeEach(() => {
       return test
         .run(path.join(__dirname, '../app'))
         .inDir(
@@ -98,32 +98,32 @@ describe('generator-theme', function() {
         .withPrompts({
           name: 'CoMpany   *name'
         })
-        .on('ready', function(generator) {
+        .on('ready', generator => {
           gen = generator;
         });
     });
 
-    it('current directory to name', function() {
+    it('current directory to name', () => {
       assert.textEqual(helpers.name(), 'Theme Name');
     });
 
-    it('default name to slug', function() {
+    it('default name to slug', () => {
       assert.textEqual(helpers.nameToSlug(helpers.name()), 'theme-name');
     });
 
-    it('answer name to slug', function() {
+    it('answer name to slug', () => {
       assert.textEqual(gen.props.domain, 'company-name.local');
     });
   });
 
-  describe('should output', function() {
-    beforeEach(function() {
+  describe('should output', () => {
+    beforeEach(() => {
       return test
         .run(path.join(__dirname, '../app'))
         .inDir(
           path.join(
             os.tmpdir(),
-            randomstring.generate(7) + '/wp-content/themes/theme-name'
+            `${randomstring.generate(7)}/wp-content/themes/theme-name`
           )
         )
         .withPrompts({
@@ -132,34 +132,34 @@ describe('generator-theme', function() {
         });
     });
 
-    it('package.json name', function() {
+    it('package.json name', () => {
       assert.noJsonFileContent('package.json', {
         name: '<%= props.nameToSlug %>'
       });
       assert.jsonFileContent('package.json', { name: 'theme-name' });
     });
 
-    it('gulpfile.js browser proxy', function() {
+    it('gulpfile.js browser proxy', () => {
       assert.noFileContent('gulpfile.js', /<%=.*%>/);
       assert.fileContent('gulpfile.js', 'theme-name.local');
     });
 
-    it('src/style.scss theme name and description', function() {
+    it('src/style.scss theme name and description', () => {
       assert.noFileContent('src/style.scss', /<%=.*%>/);
       assert.fileContent('src/style.scss', 'Theme Name');
     });
   });
 
-  describe('should not overwrite existing', function() {
-    beforeEach(function() {
+  describe('should not overwrite existing', () => {
+    beforeEach(() => {
       return test
         .run(path.join(__dirname, '../app'))
         .inDir(
           path.join(
             os.tmpdir(),
-            randomstring.generate(7) + '/wp-content/themes/theme-name'
+            `${randomstring.generate(7)}/wp-content/themes/theme-name`
           ),
-          function(dir) {
+          dir => {
             fs.writeFileSync(
               path.join(dir + '../../../../wp-config.php'),
               '<?php phpinfo(); ?>'
@@ -176,30 +176,30 @@ describe('generator-theme', function() {
         });
     });
 
-    it('wp-config.php', function() {
+    it('wp-config.php', () => {
       assert.file('../../../wp-config.php');
       assert.fileContent('../../../wp-config.php', /<\?php.*\?>/);
     });
 
-    it('.htaccess', function() {
+    it('.htaccess', () => {
       assert.file('../../../.htaccess');
       assert.fileContent('../../../.htaccess', /Redirect/);
     });
   });
 
-  describe('should above theme dir', function() {
-    var consoleSpy;
+  describe('should above theme dir', () => {
+    let consoleSpy;
 
-    beforeEach(function() {
+    beforeEach(() => {
       return test
         .run(path.join(__dirname, '../app'))
         .inDir(path.join(os.tmpdir(), '../private'))
         .withPrompts({
           security: true
         })
-        .on('ready', function(generator) {
+        .on('ready', generator => {
           // remove existing spy
-          generator.log = function() {};
+          generator.log = () => {};
 
           // attach new spy
           consoleSpy = sinon.spy(generator, 'log');
@@ -207,25 +207,25 @@ describe('generator-theme', function() {
         });
     });
 
-    it('not output security', function() {
+    it('not output security', () => {
       assert.noFile(files.security);
     });
 
-    it('output console log', function() {
+    it('output console log', () => {
       // initializing (1), errors (4), install (1)
       assert.equal(consoleSpy.callCount, 6);
     });
   });
 
-  describe('prompts:', function() {
-    describe('all', function() {
-      beforeEach(function() {
+  describe('prompts:', () => {
+    describe('all', () => {
+      beforeEach(() => {
         return test
           .run(path.join(__dirname, '../app'))
           .inDir(
             path.join(
               os.tmpdir(),
-              randomstring.generate(7) + '/wp-content/themes/theme-name'
+              `${randomstring.generate(7)}/wp-content/themes/theme-name`
             )
           )
           .withPrompts({
@@ -234,29 +234,29 @@ describe('generator-theme', function() {
           });
       });
 
-      describe('should generate', function() {
-        it('default', function() {
+      describe('should generate', () => {
+        it('default', () => {
           assert.file(files.default);
         });
 
-        it('sass', function() {
+        it('sass', () => {
           assert.file(files.sass);
         });
 
-        it('security', function() {
+        it('security', () => {
           assert.file(files.security);
         });
       });
     });
 
-    describe('sass', function() {
-      beforeEach(function() {
+    describe('sass', () => {
+      beforeEach(() => {
         return test
           .run(path.join(__dirname, '../app'))
           .inDir(
             path.join(
               os.tmpdir(),
-              randomstring.generate(7) + '/wp-content/themes/theme-name'
+              `${randomstring.generate(7)}/wp-content/themes/theme-name`
             )
           )
           .withPrompts({
@@ -264,27 +264,27 @@ describe('generator-theme', function() {
           });
       });
 
-      describe('should generate', function() {
-        it('default', function() {
+      describe('should generate', () => {
+        it('default', () => {
           assert.file(files.default);
         });
       });
 
-      describe('should not generate', function() {
-        it('sass', function() {
+      describe('should not generate', () => {
+        it('sass', () => {
           assert.noFile(files.sass);
         });
       });
     });
 
-    describe('security', function() {
-      beforeEach(function() {
+    describe('security', () => {
+      beforeEach(() => {
         return test
           .run(path.join(__dirname, '../app'))
           .inDir(
             path.join(
               os.tmpdir(),
-              randomstring.generate(7) + '/wp-content/themes/theme-name'
+              `${randomstring.generate(7)}/wp-content/themes/theme-name`
             )
           )
           .withPrompts({
@@ -292,14 +292,14 @@ describe('generator-theme', function() {
           });
       });
 
-      describe('should generate', function() {
-        it('default', function() {
+      describe('should generate', () => {
+        it('default', () => {
           assert.file(files.default);
         });
       });
 
-      describe('should not generate', function() {
-        it('security', function() {
+      describe('should not generate', () => {
+        it('security', () => {
           assert.noFile(files.security);
         });
       });
