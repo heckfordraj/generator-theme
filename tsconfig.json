@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "removeComments": true,
+    "target": "es2015"
+  },
+  "include": ["app/**/*.ts"],
+  "exclude": ["node_modules"]
+}

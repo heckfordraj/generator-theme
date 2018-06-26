@@ -1,5 +1,5 @@
 {
-  "name": "<%= props.nameToSlug() %>",
+  "name": "<%= helpers.slugify(answers.name) %>",
   "version": "1.0.0",
   "description": "",
   "scripts": {
