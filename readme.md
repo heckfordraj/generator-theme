@@ -6,10 +6,10 @@ A [Yeoman](https://www.npmjs.com/package/yo) generator that scaffolds a basic WP
 
 ## Install
 
-First, install [`yo`](https://www.npmjs.com/package/yo) (needed to generate the theme) and the theme itself using `npm`:
+First, install [`yo`](https://www.npmjs.com/package/yo) (needed to generate the theme) and the theme itself:
 
 ```bash
-npm install -g yo https://github.com/heckfordraj/generator-theme.git
+yarn global add yo https://github.com/heckfordraj/generator-theme.git
 ```
 
 This will install the command `yo` and the theme globally.
@@ -38,38 +38,15 @@ yo theme
 
 #### `Theme name`
 
-The titlecase name of the theme as usually entered in the `theme/style.css`.
+The titlecase name of the theme as usually entered in the `theme/style.css`.  
+_Default:_ humanised format of the theme directory name e.g. `Theme Name`
 
-_Default:_ humanized format of the theme directory name e.g. `Theme Name`
+#### `What web server is this website going to be running on?`
 
-#### `Site domain`
-
-The domain of the site hosted locally. This will be used as the proxy path.
-
-_Default:_ slugified format of the theme directory name e.g. `theme-name`
+The type of web server used in production. Used to decide whether to install `.htaccess`.  
+_Default:_ `Apache`
 
 #### `Include sass templates?`
 
-Whether to install the sass boilerplate.
-
+Whether to install the sass boilerplates.  
 _Default:_ `y`
-
-#### `Include security additions?`
-
-Whether to install the `.htaccess`, `wp-config.php`, and `robots.txt` additions. Will update the root `.htaccess`, update `wp-config.php`, add a root `robots.txt`, and add a `wp-content/.htaccess`.
-
-_Default:_ `y`
-
-## Tests
-
-Mocha:
-
-```bash
-npm test
-```
-
-Mocha and Istanbul:
-
-```bash
-npm run coverage
-```

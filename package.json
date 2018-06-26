@@ -5,6 +5,9 @@
   "files": [
     "app"
   ],
+  "keywords": [
+    "yeoman-generator"
+  ],
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",

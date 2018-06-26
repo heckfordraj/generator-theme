@@ -75,11 +75,17 @@ module.exports = class extends Base {
     );
 
     // .htaccess
-    if (this.answers.server === 'Apache')
+    if (this.answers.server === 'Apache') {
       this.fs.copy(
         this.templatePath('htaccess'),
         this.destinationPath('../../../.htaccess')
       );
+
+      this.fs.copy(
+        this.templatePath('htaccess'),
+        this.destinationPath('../../../wp-admin/.htaccess')
+      );
+    }
 
     // _sass/*.scss
     if (this.answers.sass)

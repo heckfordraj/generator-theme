@@ -1,41 +1,38 @@
-# Theme
-
-## Structure
-
-The theme will be generated into `dist`. This folder is wiped before every run, so do not make any changes in this folder.
-
-Files with the extensions `php|html|jpg|png|gif|svg|ico` in any directory will be copied over by default to the build directory.
-
-Use `src/assets` to keep static files and any other files you want to include in the theme. The contents of this folder will be copied entirely to `dist/assets`.
+# <%= answers.name %>
 
 ## Usage
 
 First install the development dependencies:
 
 ```bash
-npm install
+yarn
 ```
 
-To generate the files, launch a local web server, and watch for changes, use:
+To generate the files for development and watch for changes, use:
 
 ```bash
-npm run serve
+yarn serve
 ```
 
-To generate the files only, use:
+To generate the files for production, use:
 
 ```bash
-npm run build
+yarn build
 ```
 
-You can target a build environment by using the flags `--dev` (default) or `--prod`.
+## Overview
 
-### Development (default)
+The theme will be generated into `dist`. This folder is wiped before every run, so do not make any changes in this folder.
 
-SASS to CSS (includes sourcemaps)
+Files without the extensions `js|scss|woff|woff2|eot|ttf|otf` will be copied to the build directory.
+
+### Development
+
+SASS to CSS  
+JS (Babel)
 
 ### Production
 
-SASS to CSS (with Autoprefixer, CleanCSS)
-JS (with UglifyJS)
+SASS to CSS (Autoprefixer, cssnano)  
+JS (Babel, UglifyJS)  
 Images (jpg, png, gif, svg with Imagemin)

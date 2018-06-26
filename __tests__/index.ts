@@ -23,7 +23,7 @@ const files = {
     'src/template-parts/content.php'
   ],
   sass: ['src/_sass/font.scss', 'src/_sass/grid.scss', 'src/_sass/reset.scss'],
-  server: ['../../../.htaccess']
+  server: ['../../../.htaccess', '../../../wp-admin/.htaccess']
 };
 
 describe('generator-theme', () => {
@@ -113,6 +113,11 @@ describe('generator-theme', () => {
           name: '<%= props.nameToSlug %>'
         });
         assert.jsonFileContent('package.json', { name: 'company-name' });
+      });
+
+      it('should replace readme.md variable', () => {
+        assert.noFileContent('readme.md', /<%=.*%>/);
+        assert.fileContent('readme.md', 'Company Name');
       });
 
       it('should replace src/style.scss variables', () => {
