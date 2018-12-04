@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@types/jest": "^23.1.2",
-    "@types/underscore.string": "^0.0.32",
+    "@types/underscore.string": "^0.0.33",
     "@types/yeoman-generator": "^2.0.3",
     "@types/yeoman-test": "^2.0.0",
     "coveralls": "^3.0.1",
