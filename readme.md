@@ -34,6 +34,8 @@ Generate the theme:
 yo theme
 ```
 
+**WARNING: Webpack does not currently watch new files. The process must be restarted in order for the new file to be built**
+
 ## Questions
 
 #### `Theme name`
