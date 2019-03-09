@@ -41,7 +41,7 @@
     "url": "git+https://github.com/heckfordraj/generator-theme.git"
   },
   "devDependencies": {
-    "@types/jest": "^23.1.2",
+    "@types/jest": "^24.0.11",
     "@types/underscore.string": "^0.0.33",
     "@types/yeoman-generator": "^2.0.3",
     "@types/yeoman-test": "^2.0.0",
