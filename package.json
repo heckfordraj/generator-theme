@@ -33,7 +33,7 @@
   "dependencies": {
     "underscore.string": "^3.3.4",
     "yeoman-generator": "^3.0.0",
-    "yo": "^2.0.2",
+    "yo": "^3.0.0",
     "yosay": "^2.0.2"
   },
   "repository": {
