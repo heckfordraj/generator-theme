@@ -48,7 +48,7 @@
     "coveralls": "^3.0.1",
     "husky": "^0.14.3",
     "jest": "^23.2.0",
-    "lint-staged": "^8.0.0",
+    "lint-staged": "^9.2.1",
     "prettier": "^1.13.6",
     "ts-jest": "^23.0.0",
     "typescript": "^2.9.2",
