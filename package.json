@@ -45,7 +45,7 @@
     "@types/underscore.string": "^0.0.33",
     "@types/yeoman-generator": "^2.0.3",
     "@types/yeoman-test": "^2.0.0",
-    "coveralls": "^3.0.1",
+    "coveralls": "^3.1.1",
     "husky": "^0.14.3",
     "jest": "^23.2.0",
     "lint-staged": "^8.0.0",
